@@ -39,7 +39,6 @@ public class TrainDeparture {
   }
 
   public LocalTime getDepartureTime() {
-
     return departureTime;
   }
 
