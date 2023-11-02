@@ -40,8 +40,8 @@ public class UserInteraction {
           System.out.println("Enter a delay in format hh:mm ");
           String userInputDelay = scanner.nextLine();
 
-          trainDeparture = new TrainDeparture(LocalTime.parse(userInputDeparture), userInputLine, userInputTrainNumber, userInputDestination, Integer.parseInt(userInputTrack), LocalTime.parse(userInputDelay));
-
+          InputHandler inputHandler = new InputHandler();
+          trainDeparture = inputHandler.createTrainDeparture(userInputDeparture, userInputLine, userInputTrainNumber, userInputDestination, userInputTrack, userInputDelay);
 
           System.out.println("New Train Departure Created:");
           System.out.println("Departure Time: " + trainDeparture.getDepartureTime());
