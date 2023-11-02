@@ -1,6 +1,7 @@
 package edu.ntnu.stud;
 
 import java.time.LocalTime;
+import java.util.Scanner;
 
 /**
  * The class for an object representing a train departure.
