@@ -1,20 +1,13 @@
 package edu.ntnu.stud;
 
-import java.time.LocalTime;
-import java.util.Scanner;
-
 public class UserInteraction {
 
   public void Start() {
+    UserInterface userInterface = new UserInterface();
     boolean isRunning = true;
 
     while (isRunning) {
-      System.out.println("Welcome to the Train Dispatch App. Here are your options:");
-      System.out.println("1. Create new Train Departure");
-      System.out.println("2. Exit application");
-
-      UserInput userInput = new UserInput();
-      String input = userInput.promptForInput("Please choose an option by pressing a number");
+      String input = userInterface.displayMainMenu();
 
       switch (input) {
 
@@ -22,30 +15,13 @@ public class UserInteraction {
 
           TrainDeparture trainDeparture;
 
-          System.out.println();
-
-          String userInputDeparture = userInput.promptForInput("Enter a departure time in format hh:mm ");
-          String userInputLine = userInput.promptForInput("Enter a Line: ");
-          String userInputTrainNumber = userInput.promptForInput("Enter a train number: ");
-          String userInputDestination = userInput.promptForInput("Enter a destination: ");
-          String userInputTrack = userInput.promptForInput("Enter a track: ");
-          String userInputDelay = userInput.promptForInput("Enter a delay in format hh:mm: ");
-
-          InputHandler inputHandler = new InputHandler();
-          trainDeparture = inputHandler.createTrainDeparture(userInputDeparture, userInputLine, userInputTrainNumber, userInputDestination, userInputTrack, userInputDelay);
-
-          System.out.println("New Train Departure Created:");
-          System.out.println("Departure Time: " + trainDeparture.getDepartureTime());
-          System.out.println("Line: " + trainDeparture.getLine());
-          System.out.println("Train Number: " + trainDeparture.getTrainNumber());
-          System.out.println("Destination: " + trainDeparture.getDestination());
-          System.out.println("Track: " + trainDeparture.getTrack());
-          System.out.println("Delay: " + trainDeparture.getDelay());
+          trainDeparture = userInterface.newTrainDeparture();
+          userInterface.displayNewTrainDepartureDetails(trainDeparture);
 
           break;
 
         case "2":
-          System.out.println("Thanks for using our app. Take care!");
+          userInterface.exitMessage();
           isRunning = false;
       }
     }
