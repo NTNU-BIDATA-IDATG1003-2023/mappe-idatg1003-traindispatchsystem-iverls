@@ -7,7 +7,9 @@ public class UserInterface {
   public String displayMainMenu() {
     System.out.println("Welcome to the Train Dispatch App. Here are your options:");
     System.out.println("1. Create new Train Departure");
-    System.out.println("2. Exit application");
+    System.out.println("2. View information board");
+    System.out.println("3. Search for Train Departure by Train Number");
+    System.out.println("4. Exit application");
     return userInput.promptForInput("Please choose an option by pressing a number: ");
 
   }
@@ -30,6 +32,10 @@ public class UserInterface {
     System.out.println("Destination: " + trainDeparture.getDestination());
     System.out.println("Track: " + trainDeparture.getTrack());
     System.out.println("Delay: " + trainDeparture.getDelay());
+  }
+
+  public String searchDepartureByTrainNumber() {
+    return userInput.promptForInput("Please provide Train Number: ");
   }
 
   public void exitMessage() {
