@@ -6,39 +6,30 @@ import java.util.Scanner;
 public class UserInteraction {
 
   public void Start() {
-    Scanner scanner = new Scanner(System.in);
     boolean isRunning = true;
 
     while (isRunning) {
-      System.out.println("Welcome to the Train Dispatch App. Choose an option:");
+      System.out.println("Welcome to the Train Dispatch App. Here are your options:");
       System.out.println("1. Create new Train Departure");
       System.out.println("2. Exit application");
 
-      String userInput = scanner.nextLine();
+      UserInput userInput = new UserInput();
+      String input = userInput.promptForInput("Please choose an option by pressing a number");
 
-      switch (userInput) {
+      switch (input) {
 
         case "1":
 
           TrainDeparture trainDeparture;
 
-          System.out.println("Enter a departure time in format hh:mm ");
-          String userInputDeparture = scanner.nextLine();
+          System.out.println();
 
-          System.out.println("Enter a Line ");
-          String userInputLine = scanner.nextLine();
-
-          System.out.println("Enter a train number ");
-          String userInputTrainNumber = scanner.nextLine();
-
-          System.out.println("Enter a destination ");
-          String userInputDestination = scanner.nextLine();
-
-          System.out.println("Enter a tack ");
-          String userInputTrack = scanner.nextLine();
-
-          System.out.println("Enter a delay in format hh:mm ");
-          String userInputDelay = scanner.nextLine();
+          String userInputDeparture = userInput.promptForInput("Enter a departure time in format hh:mm ");
+          String userInputLine = userInput.promptForInput("Enter a Line: ");
+          String userInputTrainNumber = userInput.promptForInput("Enter a train number: ");
+          String userInputDestination = userInput.promptForInput("Enter a destination: ");
+          String userInputTrack = userInput.promptForInput("Enter a track: ");
+          String userInputDelay = userInput.promptForInput("Enter a delay in format hh:mm: ");
 
           InputHandler inputHandler = new InputHandler();
           trainDeparture = inputHandler.createTrainDeparture(userInputDeparture, userInputLine, userInputTrainNumber, userInputDestination, userInputTrack, userInputDelay);
