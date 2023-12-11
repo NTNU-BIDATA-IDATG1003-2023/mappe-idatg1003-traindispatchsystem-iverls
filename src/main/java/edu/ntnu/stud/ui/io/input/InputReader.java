@@ -1,11 +1,11 @@
-package edu.ntnu.stud;
+package edu.ntnu.stud.ui.io.input;
 
 import java.util.Scanner;
 
-public class UserInput {
+public class InputReader {
   public Scanner scanner;
 
-  public UserInput() {
+  public InputReader() {
     this.scanner = new Scanner(System.in);
   }
 
@@ -14,4 +14,7 @@ public class UserInput {
     return scanner.nextLine();
   }
 
+  public String readUserInput() {
+    return scanner.nextLine();
+  }
 }

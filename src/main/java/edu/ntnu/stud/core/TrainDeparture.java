@@ -1,4 +1,4 @@
-package edu.ntnu.stud;
+package edu.ntnu.stud.core;
 
 import java.time.LocalTime;
 import java.util.Scanner;

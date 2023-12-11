@@ -1,4 +1,4 @@
-package edu.ntnu.stud;
+package edu.ntnu.stud.utility;
 
 import java.time.DateTimeException;
 import java.time.LocalTime;

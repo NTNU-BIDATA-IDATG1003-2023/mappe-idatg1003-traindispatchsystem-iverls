@@ -1,7 +1,8 @@
 package edu.ntnu.stud;
 
+import edu.ntnu.stud.core.TrainDeparture;
+import edu.ntnu.stud.ui.io.output.UserInterface;
 import java.util.ArrayList;
-import java.util.Optional;
 
 public class InformationBoard {
 
