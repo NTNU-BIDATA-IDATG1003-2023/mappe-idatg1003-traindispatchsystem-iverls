@@ -117,4 +117,8 @@ public class UserInterface {
   public void displayTrainNumberNotAvailable() {
     print("This Train Number is already in use");
   }
+
+  public void displayDepartureRemovalSuccessMessage() {
+    print("This Train departure have successfully been deleted");
+  }
 }

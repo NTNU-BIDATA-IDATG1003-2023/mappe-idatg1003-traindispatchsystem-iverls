@@ -41,7 +41,7 @@ public class UserInteraction {
           createTrainDeparture();
           break;
         case "6":
-          removeTrainDeparture();
+          deleteTrainDeparture();
           break;
         case "7":
           userInterface.exitMessage();
@@ -159,9 +159,18 @@ public class UserInteraction {
     }
   }
 
-  public void removeTrainDeparture()
-  {
+  public void deleteTrainDeparture() {
+    userInterface.trainNumberPrompt();
+    String trainNumber = inputHandler.getTrainNumberInput();
 
+    Optional<TrainDeparture> trainDeparture = trainStation.findTrainDepartureByNumber(trainNumber);
+
+    if (trainDeparture.isPresent()) {
+      trainStation.removeTrainDeparture(trainNumber);
+      userInterface.displayDepartureRemovalSuccessMessage();
+    } else {
+      userInterface.displayDepartureNotFoundMessage();
+    }
   }
 
 

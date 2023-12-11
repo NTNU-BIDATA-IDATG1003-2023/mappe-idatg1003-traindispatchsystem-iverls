@@ -27,6 +27,13 @@ public class TrainStation {
 
     }
   }
+  public void removeTrainDeparture(String trainNumber) {
+    if (trainDepartures.containsKey(trainNumber)) {
+      trainDepartures.remove(trainNumber);
+    } else {
+
+    }
+  }
 
     public Optional<TrainDeparture> findTrainDepartureByNumber(String trainNumber) {
       return Optional.ofNullable(trainDepartures.get(trainNumber));
@@ -40,4 +47,6 @@ public class TrainStation {
         .filter(departure -> departure.getDestination().equalsIgnoreCase(destination))
         .collect(Collectors.toList());
   }
-  }
+
+
+}
