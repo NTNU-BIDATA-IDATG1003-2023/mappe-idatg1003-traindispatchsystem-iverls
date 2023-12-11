@@ -144,13 +144,19 @@ public class UserInteraction {
 
   }
 
-  public void createTrainDeparture()
-  {
-    TrainDeparture trainDeparture = new TrainDeparture(inputHandler.getDepartureTimeInput(), inputHandler.getLineInput(),
-        inputHandler.getTrainNumberInput(), inputHandler.getDestinationInput(), inputHandler.getTrackInput(), inputHandler.getDelayInput());
-    userInterface.departureCreationMessage();
-    userInterface.displayTrainDepartureDetails(Optional.of(trainDeparture));
-    trainStation.addTrainDeparture(trainDeparture);
+  public void createTrainDeparture() {
+    String trainNumber = inputHandler.getTrainNumberInput();
+
+    if (trainStation.findTrainDepartureByNumber(trainNumber).isPresent()) {
+      userInterface.displayTrainNumberNotAvailable();
+    }
+    else {
+      TrainDeparture trainDeparture = new TrainDeparture(inputHandler.getDepartureTimeInput(),
+          inputHandler.getLineInput(), trainNumber, inputHandler.getDestinationInput(), inputHandler.getTrackInput(), inputHandler.getDelayInput());
+      userInterface.departureCreationMessage();
+      userInterface.displayTrainDepartureDetails(Optional.of(trainDeparture));
+      trainStation.addTrainDeparture(trainDeparture);
+    }
   }
 
   public void removeTrainDeparture()

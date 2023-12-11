@@ -113,4 +113,8 @@ public class UserInterface {
   public void displayEditSuccessMessage() {
     print("Success! Thank you for providing the updated information");
   }
+
+  public void displayTrainNumberNotAvailable() {
+    print("This Train Number is already in use");
+  }
 }
