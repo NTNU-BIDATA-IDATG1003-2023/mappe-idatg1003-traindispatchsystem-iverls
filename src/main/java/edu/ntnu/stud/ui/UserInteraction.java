@@ -16,7 +16,8 @@ public class UserInteraction {
     boolean isRunning = true;
 
     while (isRunning) {
-      String input = userInterface.displayMainMenu();
+      userInterface.displayMainMenu();
+      String input = inputHandler.menuChoice();
 
       switch (input) {
 

@@ -5,9 +5,8 @@ import edu.ntnu.stud.core.TrainDeparture;
 import edu.ntnu.stud.ui.io.input.InputReader;
 
 public class UserInterface {
-  InputReader inputReader = new InputReader();
 
-  public String displayMainMenu() {
+  public void displayMainMenu() {
     System.out.println("Welcome to the Train Dispatch App. Here are your options:");
     System.out.println("1. View information board");
     System.out.println("2. Search train departure");
@@ -17,7 +16,7 @@ public class UserInterface {
     System.out.println("6. Create new train departure");
     System.out.println("7. Delete specified train departure");
     System.out.println("8. Exit application");
-    return inputReader.promptForInput("Please choose an option by pressing a number: ");
+    System.out.println("Please choose an option by pressing a number: ");
 
   }
 
