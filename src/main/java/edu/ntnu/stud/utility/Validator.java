@@ -3,26 +3,43 @@ package edu.ntnu.stud.utility;
 import java.time.DateTimeException;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
+import java.util.Objects;
 
 public class Validator {
 
-  public static void validateTime(String timeStr) {
+  public static boolean validateTime(String timeStr) {
     try {
       LocalTime.parse(timeStr);
+      return true;
     }
     catch (DateTimeParseException e) {
-      throw new IllegalArgumentException("Invalide time format ");
+      return false;
     }
   }
-  public static void validateTrack(String trackStr) {
+  public static boolean validateTrack(String trackStr) {
     try {
       int track = Integer.parseInt(trackStr);
       if (track <= 0) {
-        throw new IllegalArgumentException("Track number must be a positive ");
+        return false;
+      }
+      else {
+        return true;
       }
     }
     catch (NumberFormatException e) {
-      throw new IllegalArgumentException("Track number must be a number");
+      return false;
     }
+  }
+
+  public static boolean validateString(String userInput) {
+    return !Objects.equals(userInput, "");
+  }
+
+  public static boolean validateTrainNumber(String userInput) {
+    return !Objects.equals(userInput, "");
+  }
+
+  public static boolean validateDelay(String userInput) {
+    return !Objects.equals(userInput, "");
   }
 }

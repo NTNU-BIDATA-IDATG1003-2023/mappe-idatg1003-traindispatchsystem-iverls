@@ -16,6 +16,7 @@ public class InformationBoard {
 
   public void displayInformationBoard() {
     for (TrainDeparture departure : trainDepartures) {
+
       userInterface.displayNewTrainDepartureDetails(departure);
     }
   }

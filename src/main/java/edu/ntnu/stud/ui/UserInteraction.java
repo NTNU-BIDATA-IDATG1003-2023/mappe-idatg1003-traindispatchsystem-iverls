@@ -88,7 +88,7 @@ public class UserInteraction {
   public void createTrainDeparture()
   {
     TrainDeparture trainDeparture = new TrainDeparture(inputHandler.getDepartureTimeInput(), inputHandler.getLineInput(),
-        inputHandler.getTrainNumberInput(), inputHandler.getDestinationInput(), inputHandler.getTrackInputInput(), inputHandler.getDelayInput());
+        inputHandler.getTrainNumberInput(), inputHandler.getDestinationInput(), inputHandler.getTrackInput(), inputHandler.getDelayInput());
     userInterface.displayNewTrainDepartureDetails(trainDeparture);
     informationBoard.addTrainDeparture(trainDeparture);
   }
