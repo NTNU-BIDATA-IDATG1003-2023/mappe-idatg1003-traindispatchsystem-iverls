@@ -11,6 +11,7 @@ public class UserInteraction {
   UserInterface userInterface = new UserInterface();
   InputHandler inputHandler = new InputHandler();
   TrainStation trainStation = new TrainStation();
+  InformationBoard informationBoard = new InformationBoard(trainStation);
 
   public void StartUI() {
 
@@ -23,7 +24,7 @@ public class UserInteraction {
       switch (input) {
 
         case "1":
-          viewInformatonboard();
+          viewInformationBoard();
           break;
         case "2":
           searchTrainDepartures();
@@ -52,7 +53,9 @@ public class UserInteraction {
 
   }
 
-  public void viewInformatonboard() {
+  public void viewInformationBoard() {
+    informationBoard.displayInformationBoard(trainStation);
+
     }
 
   public void searchTrainDepartures() {

@@ -96,7 +96,7 @@ public class InputHandler {
     while (!validInput) {
       userInterface.delayPromt();
       String userInputDelay = inputReader.readUserInput();
-      if (Validator.validateDelay(userInputDelay)) {
+      if (Validator.validateTime(userInputDelay)) {
         delay = LocalTime.parse(userInputDelay);
         validInput = true;
       } else {
