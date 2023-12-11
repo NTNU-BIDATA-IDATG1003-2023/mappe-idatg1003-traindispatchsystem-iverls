@@ -59,11 +59,9 @@ public class UserInteraction {
     }
 
   public void searchTrainDepartures() {
-    String trainNumber;
-    Optional<TrainDeparture> trainDeparture;
     userInterface.trainNumberPrompt();
-    trainNumber = inputHandler.getTrainNumberInput();
-    trainDeparture = trainStation.findTrainDepartureByNumber(trainNumber);
+    String trainNumber = inputHandler.getTrainNumberInput();
+    Optional<TrainDeparture> trainDeparture = informationBoard.findTrainDepartureByNumber(trainNumber);
     userInterface.displayTrainDepartureDetails(trainDeparture);
   }
 

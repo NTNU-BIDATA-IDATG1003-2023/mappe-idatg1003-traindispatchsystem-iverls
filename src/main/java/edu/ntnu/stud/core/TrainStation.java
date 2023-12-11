@@ -1,19 +1,20 @@
 package edu.ntnu.stud.core;
 
-import java.util.ArrayList;
+import edu.ntnu.stud.utility.TrainDepartureGenerator;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 
 public class TrainStation {
   public final Map<String, TrainDeparture> trainDepartures;
+  public TrainDepartureGenerator trainDepartureGenerator;
 
   public TrainStation() {
     this.trainDepartures = new HashMap<>();
-
+    this.trainDepartureGenerator = new TrainDepartureGenerator(this);
+    trainDepartureGenerator.generateTrainDepartures(50);
   }
 
   public void addTrainDeparture(TrainDeparture trainDeparture) {

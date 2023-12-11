@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class InformationBoard {
@@ -30,6 +31,9 @@ public class InformationBoard {
           ", Track: " + (departure.getTrack() > 0 ? departure.getTrack() : "Not allocated at this time") +
           ", Delay: " + (departure.getDelay().equals(LocalTime.of(0, 0)) ? "" : departure.getDelay()));
     }
+  }
+  public Optional<TrainDeparture> findTrainDepartureByNumber(String trainNumber) {
+    return trainStation.findTrainDepartureByNumber(trainNumber);
   }
 }
 
