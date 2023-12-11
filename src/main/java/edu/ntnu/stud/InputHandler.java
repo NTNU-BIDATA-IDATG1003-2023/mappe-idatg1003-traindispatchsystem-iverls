@@ -21,7 +21,7 @@ public class InputHandler {
     boolean validInput = false;
 
     while (!validInput) {
-      userInterface.departureTimePromt();
+      userInterface.departureTimePrompt();
       String userInputDepartureTime = inputReader.readUserInput();
       if (Validator.validateTime(userInputDepartureTime)) {
         departureTime = LocalTime.parse(userInputDepartureTime);
@@ -38,7 +38,7 @@ public class InputHandler {
     boolean validInput = false;
 
     while (!validInput) {
-      userInterface.linePromt();
+      userInterface.linePrompt();
       line = inputReader.readUserInput();
       if (Validator.validateString(line)) {
         validInput = true;
@@ -67,7 +67,7 @@ public class InputHandler {
   }
 
   public String getDestinationInput() {
-    userInterface.destinationPromt();
+    userInterface.destinationPrompt();
     return inputReader.readUserInput();
   }
 
@@ -76,7 +76,7 @@ public class InputHandler {
     boolean validInput = false;
 
     while (!validInput) {
-      userInterface.trackPromt();
+      userInterface.trackPrompt();
       String userInputTrack = inputReader.readUserInput();
       if (Validator.validateTrack(userInputTrack)) {
         track = Integer.parseInt(userInputTrack);
@@ -94,7 +94,7 @@ public class InputHandler {
     boolean validInput = false;
 
     while (!validInput) {
-      userInterface.delayPromt();
+      userInterface.delayPrompt();
       String userInputDelay = inputReader.readUserInput();
       if (Validator.validateTime(userInputDelay)) {
         delay = LocalTime.parse(userInputDelay);

@@ -4,6 +4,8 @@ import edu.ntnu.stud.InputHandler;
 import edu.ntnu.stud.core.TrainDeparture;
 import edu.ntnu.stud.core.TrainStation;
 import edu.ntnu.stud.ui.io.output.UserInterface;
+import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
 
 public class UserInteraction {
@@ -19,9 +21,9 @@ public class UserInteraction {
 
     while (isRunning) {
       userInterface.displayMainMenu();
-      String input = inputHandler.menuChoice();
+      String mainMenuChoice = inputHandler.menuChoice();
 
-      switch (input) {
+      switch (mainMenuChoice) {
 
         case "1":
           viewInformationBoard();
@@ -30,21 +32,18 @@ public class UserInteraction {
           searchTrainDepartures();
           break;
         case "3":
-          updateClock();
+          editDeparture();
           break;
         case "4":
-          addDelay();
+          updateClock();
           break;
         case "5":
-          assignLine();
-          break;
-        case "6":
           createTrainDeparture();
           break;
-        case "7":
+        case "6":
           removeTrainDeparture();
           break;
-        case "8":
+        case "7":
           userInterface.exitMessage();
           isRunning = false;
       }
@@ -59,13 +58,76 @@ public class UserInteraction {
     }
 
   public void searchTrainDepartures() {
+    userInterface.displaySearchMenu();
+    String searchChoice = inputHandler.menuChoice();
+
+    switch (searchChoice) {
+      case "1":
+        searchByTrainNumber();
+        break;
+      case "2":
+        searchByDestination();
+        break;
+      default:
+        userInterface.displayInvalidOptionMessage();
+        break;
+    }
+  }
+
+  private void searchByTrainNumber() {
     userInterface.trainNumberPrompt();
     String trainNumber = inputHandler.getTrainNumberInput();
     Optional<TrainDeparture> trainDeparture = informationBoard.findTrainDepartureByNumber(trainNumber);
     userInterface.displayTrainDepartureDetails(trainDeparture);
   }
 
+  private void searchByDestination() {
+    userInterface.destinationPrompt();
+    String destination = inputHandler.getDestinationInput();
+    List<TrainDeparture> departures = informationBoard.findTrainDeparturesByDestination(destination);
+    userInterface.displayTrainDeparturesList(departures);
+  }
 
+
+  public void editDeparture() {
+    userInterface.trainNumberPrompt();
+    String trainNumber = inputHandler.getTrainNumberInput();
+    Optional<TrainDeparture> trainDepartureOptional = trainStation.findTrainDepartureByNumber(trainNumber);
+
+    if (trainDepartureOptional.isPresent()) {
+      TrainDeparture departure = trainDepartureOptional.get();
+      userInterface.displayEditOptions();
+      String editChoice = inputHandler.menuChoice();
+
+      switch (editChoice) {
+        case "1":
+          editTrack(departure);
+          break;
+        case "2":
+          editDelay(departure);
+          break;
+        default:
+          userInterface.displayInvalidOptionMessage();
+          break;
+      }
+    } else {
+      userInterface.displayDepartureNotFoundMessage();
+    }
+  }
+
+  private void editTrack(TrainDeparture departure) {
+    userInterface.trackPrompt();
+    int newTrack = inputHandler.getTrackInput();
+    departure.setTrack(newTrack);
+    userInterface.displayEditSuccessMessage();
+  }
+
+  private void editDelay(TrainDeparture departure) {
+    userInterface.delayPrompt();
+    LocalTime newDelay = inputHandler.getDelayInput();
+    departure.setDelay(newDelay);
+    userInterface.displayEditSuccessMessage();
+  }
 
   public void updateClock()
   {
