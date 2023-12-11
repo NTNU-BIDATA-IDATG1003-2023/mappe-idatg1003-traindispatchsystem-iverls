@@ -1,8 +1,7 @@
 package edu.ntnu.stud.ui.io.output;
 
-import edu.ntnu.stud.InputHandler;
 import edu.ntnu.stud.core.TrainDeparture;
-import edu.ntnu.stud.ui.io.input.InputReader;
+import java.util.Optional;
 
 public class UserInterface {
 
@@ -52,22 +51,26 @@ public class UserInterface {
     print("Enter a delay in format hh:mm ");
   }
 
-
-  public void displayNewTrainDepartureDetails(TrainDeparture trainDeparture) {
+  public void departureCreationMessage() {
     print("New Train Departure Created:");
-    print("Departure Time: " + trainDeparture.getDepartureTime());
-    print("Line: " + trainDeparture.getLine());
-    print("Train Number: " + trainDeparture.getTrainNumber());
-    print("Destination: " + trainDeparture.getDestination());
-    print("Track: " + trainDeparture.getTrack());
-    print("Delay: " + trainDeparture.getDelay());
   }
 
-  /**
-   * public String searchDepartureByTrainNumber() {
-   * return inputReader.promptForInput("Please provide Train Number: ");
-   * }
-   **/
+
+  public void displayTrainDepartureDetails(Optional<TrainDeparture> trainDepartureOptional) {
+    if (trainDepartureOptional.isPresent()) {
+      TrainDeparture trainDeparture = trainDepartureOptional.get();
+      print("Departure Time: " + trainDeparture.getDepartureTime());
+      print("Line: " + trainDeparture.getLine());
+      print("Train Number: " + trainDeparture.getTrainNumber());
+      print("Destination: " + trainDeparture.getDestination());
+      print("Track: " + trainDeparture.getTrack());
+      print("Delay: " + trainDeparture.getDelay());
+    } else {
+      print("No train departure found with the given number.");
+    }
+  }
+
+
 
   public void errorMessageTimeFormat() {
     printError("Invalid time format, please try again (HH:MM): ");

@@ -1,15 +1,16 @@
 package edu.ntnu.stud.ui;
 
-import edu.ntnu.stud.InformationBoard;
 import edu.ntnu.stud.InputHandler;
 import edu.ntnu.stud.core.TrainDeparture;
+import edu.ntnu.stud.core.TrainStation;
 import edu.ntnu.stud.ui.io.output.UserInterface;
+import java.util.Optional;
 
 public class UserInteraction {
 
   UserInterface userInterface = new UserInterface();
   InputHandler inputHandler = new InputHandler();
-  InformationBoard informationBoard = new InformationBoard();
+  TrainStation trainStation = new TrainStation();
 
   public void StartUI() {
 
@@ -51,21 +52,16 @@ public class UserInteraction {
 
   }
 
-  public void viewInformatonboard()
-  {
-    informationBoard.displayInformationBoard();
-  }
+  public void viewInformatonboard() {
+    }
 
-
-  public void searchTrainDepartures()
-  {
-    /**
+  public void searchTrainDepartures() {
     String trainNumber;
-    TrainDeparture trainDeparture;
-    trainNumber = userInterface.searchDepartureByTrainNumber();
-    trainDeparture = informationBoard.findTrainDepartureByNumber(trainNumber);
-    userInterface.displayNewTrainDepartureDetails(trainDeparture);
-     **/
+    Optional<TrainDeparture> trainDeparture;
+    userInterface.trainNumberPrompt();
+    trainNumber = inputHandler.getTrainNumberInput();
+    trainDeparture = trainStation.findTrainDepartureByNumber(trainNumber);
+    userInterface.displayTrainDepartureDetails(trainDeparture);
   }
 
 
@@ -89,8 +85,9 @@ public class UserInteraction {
   {
     TrainDeparture trainDeparture = new TrainDeparture(inputHandler.getDepartureTimeInput(), inputHandler.getLineInput(),
         inputHandler.getTrainNumberInput(), inputHandler.getDestinationInput(), inputHandler.getTrackInput(), inputHandler.getDelayInput());
-    userInterface.displayNewTrainDepartureDetails(trainDeparture);
-    informationBoard.addTrainDeparture(trainDeparture);
+    userInterface.departureCreationMessage();
+    userInterface.displayTrainDepartureDetails(Optional.of(trainDeparture));
+    trainStation.addTrainDeparture(trainDeparture);
   }
 
   public void removeTrainDeparture()
