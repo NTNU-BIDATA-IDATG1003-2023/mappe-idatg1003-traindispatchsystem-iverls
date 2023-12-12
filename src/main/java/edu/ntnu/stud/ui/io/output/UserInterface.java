@@ -1,6 +1,7 @@
 package edu.ntnu.stud.ui.io.output;
 
-import edu.ntnu.stud.MainMenu;
+import edu.ntnu.stud.MainMenuEnum;
+import edu.ntnu.stud.TrainDepartureEnum;
 import edu.ntnu.stud.core.TrainDeparture;
 import edu.ntnu.stud.ui.Statistics;
 import java.time.LocalTime;
@@ -13,22 +14,50 @@ public class UserInterface {
 
 
   public void displayMainMenu() {
-    for (MainMenu option : MainMenu.values()) {
-      terminalPrinter.print(option.getOptionNumber() + ". " + option.getDescription());
+    menuBorder();
+    terminalPrinter.print("Welcome to GoTrain, a user friendly Train Dispatch System!");
+    terminalPrinter.print("To access app feature input one of the command word below.");
+    terminalPrinter.print("List of commands in CAPITAL letters: ");
+    for (MainMenuEnum option : MainMenuEnum.values()) {
+      terminalPrinter.print(formatMenuOption(option));
     }
-    terminalPrinter.print("Please choose an option by pressing a number: ");
+    menuBorder();
+  }
+
+  private String formatMenuOption(MainMenuEnum option) {
+    if (option.getCommandWords().length > 0) {
+      String firstCommandWord = option.getCommandWords()[0].toUpperCase();
+      return firstCommandWord + " - " + option.getFullDescription();
+    }
+    return option.getFullDescription();
   }
 
   public void displaySearchMenu() {
-    terminalPrinter.print("Please select search parameter");
-    terminalPrinter.print("1. TrainNumber ");
-    terminalPrinter.print("2. Destination ");
+    menuBorder();
+    terminalPrinter.print("Search Train Departures");
+    terminalPrinter.print("Input one of the command words below to search:");
+    terminalPrinter.print("List of search commands:");
+    for (TrainDepartureEnum option : TrainDepartureEnum.values()) {
+      if (option.name().startsWith("SEARCH_")) {
+        terminalPrinter.print(formatTrainDepartureMenuOption(option));
+      }
+    }
+    menuBorder();
   }
-
-  public void displayEditOptions() {
-    terminalPrinter.print("Please select what information you want to edit");
-    terminalPrinter.print("1. Track ");
-    terminalPrinter.print("2. Delay ");
+  public void displayEditMenu(String title) {
+    menuBorder();
+    terminalPrinter.print(title);
+    terminalPrinter.print("Input one of the command words below to edit:");
+    terminalPrinter.print("List of edit commands:");
+    for (TrainDepartureEnum option : TrainDepartureEnum.values()) {
+      if (option.name().startsWith("EDIT_")) {
+        terminalPrinter.print(formatTrainDepartureMenuOption(option));
+      }
+    }
+    menuBorder();
+  }
+  private String formatTrainDepartureMenuOption(TrainDepartureEnum option) {
+    return option.getCommandWord().toUpperCase() + " - " + option.getDescription();
   }
 
   public void displayTrainDepartureDetails(Optional<TrainDeparture> trainDepartureOptional) {
@@ -140,6 +169,8 @@ public class UserInterface {
     terminalPrinter.print(message);
     map.forEach((key, value) -> terminalPrinter.print("  " + key + ": " + value));
   }
-
+  private void menuBorder() {
+    terminalPrinter.print("_______________________________________");
+  }
 
 }

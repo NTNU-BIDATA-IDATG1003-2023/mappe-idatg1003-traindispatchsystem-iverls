@@ -1,12 +1,14 @@
 package edu.ntnu.stud.ui;
 
 import edu.ntnu.stud.InputHandler;
-import edu.ntnu.stud.MainMenu;
-import edu.ntnu.stud.TrainStationInfoEnum;
-import edu.ntnu.stud.core.Clock;
+import edu.ntnu.stud.MainMenuEnum;
+import edu.ntnu.stud.TrainDepartureEnum;
 import edu.ntnu.stud.core.TrainDeparture;
 import edu.ntnu.stud.core.TrainStation;
 import edu.ntnu.stud.ui.io.output.UserInterface;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +19,6 @@ public class UserInteraction {
   InputHandler inputHandler = new InputHandler();
   TrainStation trainStation = new TrainStation();
   InformationBoard informationBoard = new InformationBoard(trainStation);
-  Clock clock = new Clock();
 
   public void StartUI() {
 
@@ -26,7 +27,7 @@ public class UserInteraction {
     while (isRunning) {
       userInterface.displayMainMenu();
       String userChoice = inputHandler.menuChoice();
-      MainMenu selectedOption = MainMenu.fromOptionNumber(userChoice);
+      MainMenuEnum selectedOption = MainMenuEnum.fromInput(userChoice);
 
       if (selectedOption == null) {
         userInterface.displayInvalidOptionMessage();
@@ -54,14 +55,22 @@ public class UserInteraction {
     userInterface.displaySearchMenu();
     String searchChoice = inputHandler.menuChoice();
 
-    TrainStationInfoEnum command = TrainStationInfoEnum.fromString(searchChoice);
+    TrainDepartureEnum command = TrainDepartureEnum.fromCommandWord(searchChoice);
 
     switch (command) {
-      case TRAIN_NUMBER -> searchByTrainNumber();
-      case DESTINATION -> searchByDestination();
+      case SEARCH_DEPARTURE_TIME -> searchByDepartureTime();
+      case SEARCH_LINE -> searchByLine();
+      case SEARCH_TRAIN_NUMBER -> searchByTrainNumber();
+      case SEARCH_DESTINATION -> searchByDestination();
+      case SEARCH_TRACK -> searchByTrack();
+      case SEARCH_DELAY -> searchByDelay();
       default -> userInterface.displayInvalidOptionMessage();
     }
   }
+
+
+
+
   public void editTrainDeparture() {
     userInterface.trainNumberPrompt();
     String trainNumber = inputHandler.getTrainNumberInput();
@@ -69,12 +78,23 @@ public class UserInteraction {
 
     if (trainDepartureOptional.isPresent()) {
       TrainDeparture departure = trainDepartureOptional.get();
-      userInterface.displayEditOptions();
-      String editChoice = inputHandler.menuChoice();
+      userInterface.displayEditMenu("Edit Train Departure");
+      String choice = inputHandler.menuChoice();
 
-      switch (editChoice) {
-        case "1" -> editTrack(departure);
-        case "2" -> editDelay(departure);
+      TrainDepartureEnum command = TrainDepartureEnum.fromCommandWord(choice);
+
+      if (command == null) {
+        userInterface.displayInvalidOptionMessage();
+        return;
+      }
+
+      switch (command) {
+        case EDIT_DEPARTURE_TIME -> editDepartureTime(departure);
+        case EDIT_LINE-> editLine(departure);
+        case EDIT_TRAIN_NUMBER -> editTrainNumber(departure);
+        case EDIT_DESTINATION -> editDestination(departure);
+        case EDIT_TRACK -> editTrack(departure);
+        case EDIT_DELAY -> editDelay(departure);
         default -> userInterface.displayInvalidOptionMessage();
       }
     } else {
@@ -82,30 +102,107 @@ public class UserInteraction {
     }
   }
 
+  private void editDestination(TrainDeparture departure) {
+    userInterface.destinationPrompt(); // Prompt the user for the new destination
+    String newDestination = inputHandler.getDestinationInput(); // Get the new destination from the user
+    departure.setDestination(newDestination); // Set the new destination in the departure object
+    userInterface.displayEditSuccessMessage(); // Display a success message
+    waitForEnterKeyPress(); // Wait for user to press Enter
+  }
+
+
+  private void editTrainNumber(TrainDeparture departure) {
+    userInterface.trainNumberPrompt(); // Prompt the user for the new train number
+    String newTrainNumber = inputHandler.getTrainNumberInput(); // Get the new train number from the user
+    departure.setTrainNumber(newTrainNumber); // Set the new train number in the departure object
+    userInterface.displayEditSuccessMessage(); // Display a success message
+    waitForEnterKeyPress(); // Wait for user to press Enter
+  }
+
+
+  private void editLine(TrainDeparture departure) {
+    userInterface.linePrompt(); // Prompt the user for the new line
+    String newLine = inputHandler.getLineInput(); // Get the new line from the user
+    departure.setLine(newLine); // Set the new line in the departure object
+    userInterface.displayEditSuccessMessage(); // Display a success message
+    waitForEnterKeyPress(); // Wait for user to press Enter
+  }
+
+
+  private void editDepartureTime(TrainDeparture departure) {
+    userInterface.departureTimePrompt(); // Prompt the user for the new departure time
+    LocalTime newDepartureTime = inputHandler.getDepartureTimeInput(); // Get the new departure time from the user
+    departure.setDepartureTime(newDepartureTime); // Set the new departure time in the departure object
+    userInterface.displayEditSuccessMessage(); // Display a success message
+    waitForEnterKeyPress(); // Wait for user to press Enter
+  }
+
+
   public void viewInformationBoard() {
     informationBoard.displayInformationBoard(trainStation);
+    waitForEnterKeyPress();
     }
+
+  private void searchByDepartureTime() {
+    userInterface.departureTimePrompt(); // Prompt the user for a departure time
+    LocalTime departureTime = inputHandler.getDepartureTimeInput(); // Get the departure time input from the user
+
+    // Filter the train departures by the specified departure time
+    List<TrainDeparture> departures = trainStation.findTrainDeparturesByDepartureTime(departureTime);
+
+    // Display the filtered list of train departures
+    userInterface.displayTrainDeparturesList(departures);
+
+    waitForEnterKeyPress(); // Wait for the user to press enter before proceeding
+  }
+  private void searchByLine() {
+    userInterface.linePrompt();
+    String line = inputHandler.getLineInput();
+    List<TrainDeparture> departures = trainStation.findTrainDeparturesByLine(line);
+    userInterface.displayTrainDeparturesList(departures);
+    waitForEnterKeyPress();
+  }
 
   private void searchByTrainNumber() {
     userInterface.trainNumberPrompt();
     String trainNumber = inputHandler.getTrainNumberInput();
-    Optional<TrainDeparture> trainDeparture = informationBoard.findTrainDepartureByNumber(trainNumber);
+    Optional<TrainDeparture> trainDeparture = trainStation.findTrainDepartureByNumber(trainNumber);
     userInterface.displayTrainDepartureDetails(trainDeparture);
+    waitForEnterKeyPress();
   }
 
   private void searchByDestination() {
     userInterface.destinationPrompt();
     String destination = inputHandler.getDestinationInput();
-    List<TrainDeparture> departures = informationBoard.findTrainDeparturesByDestination(destination);
+    List<TrainDeparture> departures = trainStation.findTrainDeparturesByDestination(destination);
     userInterface.displayTrainDeparturesList(departures);
+    waitForEnterKeyPress();
   }
+  private void searchByTrack() {
+    userInterface.trackPrompt(); // Prompt the user for a track number
+    int trackNumber = inputHandler.getTrackInput(); // Get the track number input from the user
 
+    // Filter the train departures by the specified track number
+    List<TrainDeparture> departures = trainStation.findTrainDeparturesByTrack(trackNumber);
 
+    // Display the filtered list of train departures
+    userInterface.displayTrainDeparturesList(departures);
+
+    waitForEnterKeyPress(); // Wait for the user to press enter before proceeding
+  }
+  private void searchByDelay() {
+    userInterface.delayPrompt();
+    LocalTime delay = inputHandler.getDelayInput();
+    List<TrainDeparture> departures = trainStation.findTrainDeparturesByDelay(delay);
+    userInterface.displayTrainDeparturesList(departures);
+    waitForEnterKeyPress();
+  }
   private void editTrack(TrainDeparture departure) {
     userInterface.trackPrompt();
     int newTrack = inputHandler.getTrackInput();
     departure.setTrack(newTrack);
     userInterface.displayEditSuccessMessage();
+    waitForEnterKeyPress();
   }
 
   private void editDelay(TrainDeparture departure) {
@@ -113,18 +210,15 @@ public class UserInteraction {
     LocalTime newDelay = inputHandler.getDelayInput();
     departure.setDelay(newDelay);
     userInterface.displayEditSuccessMessage();
+    waitForEnterKeyPress();
   }
 
   public void updateClock() {
-    try {
-      LocalTime newTime = inputHandler.getClockTimeInput();
-      clock.setCurrentTime(newTime);
-      trainStation.removeExpiredTrainDepartures(clock.getCurrentTime());
-      userInterface.displayClockUpdatedMessage(clock.getCurrentTime());
 
-    } catch (Exception e) {
-      userInterface.errorMessageTimeFormat();
-    }
+      LocalTime newTime = inputHandler.getClockTimeInput();
+      trainStation.updateCurrentTime(newTime);
+      userInterface.displayClockUpdatedMessage(newTime);
+    waitForEnterKeyPress();
   }
 
   public void createTrainDeparture() {
@@ -140,6 +234,7 @@ public class UserInteraction {
       userInterface.displayTrainDepartureDetails(Optional.of(trainDeparture));
       trainStation.addTrainDeparture(trainDeparture);
     }
+    waitForEnterKeyPress();
   }
 
   public void deleteTrainDeparture() {
@@ -154,12 +249,23 @@ public class UserInteraction {
     } else {
       userInterface.displayDepartureNotFoundMessage();
     }
+    waitForEnterKeyPress();
   }
   public void showStatistics() {
-    Statistics stats = trainStation.getStationStatisti();
+    Statistics stats = trainStation.getStationStatistics();
     userInterface.displayStatistics(stats);
+    waitForEnterKeyPress();
   }
 
+  public void waitForEnterKeyPress() {
+    System.out.println("Press Enter key to return to the main menu...");
+
+    try {
+      new BufferedReader(new InputStreamReader(System.in)).readLine();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 
 
 }
