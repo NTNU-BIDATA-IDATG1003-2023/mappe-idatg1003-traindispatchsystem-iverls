@@ -175,15 +175,10 @@ public class UserInteraction {
     }
   }
   public void statistics() {
-    int totalDepartures = trainStation.getTotalDepartures();
-    Map<String, Integer> departuresByDestination = trainStation.getDeparturesByDestination();
-    Map<Integer, Integer> departuresByTrack = trainStation.getDeparturesByTrack();
-    Map<String, Integer> departuresByLine = trainStation.getDeparturesByLine();
-    double averageDelay = trainStation.getAverageDelay();
-    double percentageNotDelayed = trainStation.getPercentageNotDelayed();
-
-    userInterface.displayStatistics(totalDepartures, departuresByDestination, departuresByTrack, departuresByLine, averageDelay, percentageNotDelayed);
+    Statistics stats = trainStation.getStationStatisti();
+    userInterface.displayStatistics(stats);
   }
+
 
 
 }

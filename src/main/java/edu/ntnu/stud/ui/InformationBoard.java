@@ -16,15 +16,17 @@ public class InformationBoard {
     this.trainStation = trainStation;
   }
 
-  public List<TrainDeparture> getSortedDepartures() {
+  public List<TrainDeparture> sortedDepartures() {
     Collection<TrainDeparture> departures = trainStation.getAllDepartures();
     return departures.stream()
         .sorted(Comparator.comparing(TrainDeparture::getDepartureTime))
         .collect(Collectors.toList());
   }
 
+
+
   public void displayInformationBoard(TrainStation trainStation) {
-    List<TrainDeparture> sortedDepartures = getSortedDepartures();
+    List<TrainDeparture> sortedDepartures = sortedDepartures();
     for (TrainDeparture departure : sortedDepartures) {
       System.out.println("Departure time: " + departure.getDepartureTime() + ", Line: " + departure.getLine() +
           ", Train number: " + departure.getTrainNumber() + ", Destination: " + departure.getDestination() +

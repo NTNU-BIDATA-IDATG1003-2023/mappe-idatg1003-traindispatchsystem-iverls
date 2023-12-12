@@ -1,6 +1,7 @@
 package edu.ntnu.stud.ui.io.output;
 
 import edu.ntnu.stud.core.TrainDeparture;
+import edu.ntnu.stud.ui.Statistics;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
@@ -134,14 +135,19 @@ public class UserInterface {
     printError("Invalid time format, please try again (HH:MM): ");
   }
 
-  public void displayStatistics(int totalDepartures, Map<String, Integer> departuresByDestination, Map<Integer, Integer> departuresByTrack, Map<String, Integer> departuresByLine, double averageDelay, double percentageNotDelayed) {
-    print("Total Departures: " + totalDepartures);
-    print("Departures per destination: " + departuresByDestination);
-    print("Departures per track: " + departuresByTrack);
-    print("Departures per line: " + departuresByLine);
-    print("Current average departure delay: " + averageDelay);
-    print("Percentage of departures not delayed: " + percentageNotDelayed);
-
+  public void displayStatistics(Statistics stats) {
+    print("Total Departures: " + stats.getTotalDepartures());
+    printFormattedMap("Departures per destination: ", stats.getDeparturesByDestination());
+    printFormattedMap("Departures per track: ", stats.getDeparturesByTrack());
+    printFormattedMap("Departures per line: ", stats.getDeparturesByLine());
+    print("Current average departure delay: " + Math.round(stats.getAverageDelay()) + " minutes");
+    print("Percentage of departures not delayed: " + Math.round(stats.getPercentageNotDelayed()) + "%");
   }
+
+  private void printFormattedMap(String message, Map<?, ?> map) {
+    print(message);
+    map.forEach((key, value) -> print("  " + key + ": " + value));
+  }
+
 
 }

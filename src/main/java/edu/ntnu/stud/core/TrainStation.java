@@ -1,5 +1,6 @@
 package edu.ntnu.stud.core;
 
+import edu.ntnu.stud.ui.Statistics;
 import edu.ntnu.stud.utility.TrainDepartureGenerator;
 import java.time.LocalTime;
 import java.util.Collection;
@@ -13,11 +14,13 @@ import java.util.stream.Collectors;
 public class TrainStation {
   public final Map<String, TrainDeparture> trainDepartures;
   public TrainDepartureGenerator trainDepartureGenerator;
+  private final Statistics stationStatistics;
 
   public TrainStation() {
     this.trainDepartures = new HashMap<>();
     this.trainDepartureGenerator = new TrainDepartureGenerator(this);
     trainDepartureGenerator.generateTrainDepartures(15);
+    this.stationStatistics = new Statistics(this);
   }
 
   public void addTrainDeparture(TrainDeparture trainDeparture) {
@@ -60,56 +63,10 @@ public class TrainStation {
         .collect(Collectors.toList());
   }
 
-
-  public int getTotalDepartures() {
-    return trainDepartures.size();
-  }
-
-  public Map<String, Integer> getDeparturesByDestination() {
-    Map<String, Integer> countByDestination = new HashMap<>();
-    for (TrainDeparture departure : trainDepartures.values()) {
-      countByDestination.merge(departure.getDestination(), 1, Integer::sum);
-    }
-    return countByDestination;
+  public Statistics getStationStatisti() {
+    return stationStatistics;
   }
 
 
-  public Map<Integer, Integer> getDeparturesByTrack() {
-    Map<Integer, Integer> countByTrack = new HashMap<>();
-    for (TrainDeparture departure : trainDepartures.values()) {
-      countByTrack.merge(departure.getTrack(), 1, Integer::sum);
-    }
-    return countByTrack;
-  }
-
-  public Map<String, Integer> getDeparturesByLine() {
-    Map<String, Integer> countByLine = new HashMap<>();
-    for (TrainDeparture departure : trainDepartures.values()) {
-      countByLine.merge(departure.getLine(), 1, Integer::sum);
-    }
-    return countByLine;
-  }
-
-
-  public double getAverageDelay() {
-    if (trainDepartures.isEmpty()) {
-      return 0;
-    }
-    int totalDelayMinutes = trainDepartures.values().stream()
-        .mapToInt(departure -> departure.getDelay().getHour() * 60 + departure.getDelay().getMinute())
-        .sum();
-    return (double) totalDelayMinutes / trainDepartures.size();
-  }
-
-
-  public double getPercentageNotDelayed() {
-    if (trainDepartures.isEmpty()) {
-      return 100.0;
-    }
-    long notDelayedCount = trainDepartures.values().stream()
-        .filter(departure -> departure.getDelay().equals(LocalTime.of(0, 0)))
-        .count();
-    return (double) notDelayedCount / trainDepartures.size() * 100;
-  }
 
 }
