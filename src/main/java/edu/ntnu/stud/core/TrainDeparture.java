@@ -1,7 +1,6 @@
 package edu.ntnu.stud.core;
 
 import java.time.LocalTime;
-import java.util.Scanner;
 
 /**
  * The class for an object representing a train departure.
@@ -12,12 +11,12 @@ import java.util.Scanner;
 
 public class TrainDeparture {
 
-  public LocalTime departureTime;
-  public String line;
-  public String trainNumber;
-  public String destination;
-  public int track;
-  public LocalTime delay;
+  private LocalTime departureTime;
+  private String line;
+  private String trainNumber;
+  private String destination;
+  private int track;
+  private LocalTime delay;
 
   /**
    * Constructs and object of type trainDeparture.

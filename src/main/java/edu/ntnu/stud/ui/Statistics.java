@@ -27,7 +27,7 @@ public class Statistics {
 
   // Method to update statistics
   public void calculateStatistics() {
-    totalDepartures = trainStation.trainDepartures.size();
+    totalDepartures = trainStation.getAllDepartures().size();
     calculateDeparturesByDestination();
     calculateDeparturesByLine();
     calculateDeparturesByTrack();
@@ -37,21 +37,21 @@ public class Statistics {
 
   private void calculateDeparturesByDestination() {
     departuresByDestination.clear();
-    for (TrainDeparture departure : trainStation.trainDepartures.values()) {
+    for (TrainDeparture departure : trainStation.getAllDepartures()) {
       departuresByDestination.merge(departure.getDestination(), 1, Integer::sum);
     }
   }
 
   private void calculateDeparturesByLine() {
     departuresByLine.clear();
-    for (TrainDeparture departure : trainStation.trainDepartures.values()) {
+    for (TrainDeparture departure : trainStation.getAllDepartures()) {
       departuresByLine.merge(departure.getLine(), 1, Integer::sum);
     }
   }
 
   private void calculateDeparturesByTrack() {
     departuresByTrack.clear();
-    for (TrainDeparture departure : trainStation.trainDepartures.values()) {
+    for (TrainDeparture departure : trainStation.getAllDepartures()) {
       departuresByTrack.merge(departure.getTrack(), 1, Integer::sum);
     }
   }
@@ -61,7 +61,7 @@ public class Statistics {
       averageDelay = 0;
       return;
     }
-    int totalDelayMinutes = trainStation.trainDepartures.values().stream()
+    int totalDelayMinutes = trainStation.getAllDepartures().stream()
         .mapToInt(departure -> departure.getDelay().getHour() * 60 + departure.getDelay().getMinute())
         .sum();
     averageDelay = (double) totalDelayMinutes / totalDepartures;
@@ -72,7 +72,7 @@ public class Statistics {
       percentageOfNonDelayedDepartures = 100.0;
       return;
     }
-    long notDelayedCount = trainStation.trainDepartures.values().stream()
+    long notDelayedCount = trainStation.getAllDepartures().stream()
         .filter(departure -> departure.getDelay().equals(LocalTime.of(0, 0)))
         .count();
     percentageOfNonDelayedDepartures = (double) notDelayedCount / totalDepartures * 100;

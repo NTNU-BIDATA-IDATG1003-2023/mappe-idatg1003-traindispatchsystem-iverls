@@ -14,10 +14,10 @@ import java.util.stream.Collectors;
  *
  */
 public class TrainStation {
-  public final Map<String, TrainDeparture> trainDepartures;
+  private final Map<String, TrainDeparture> trainDepartures;
   private Clock currentTime;
-  public TrainDepartureGenerator trainDepartureGenerator;
-  private final Statistics stationStatistics;
+  private TrainDepartureGenerator trainDepartureGenerator;
+  public final Statistics stationStatistics;
 
   public TrainStation() {
     this.trainDepartures = new HashMap<>();
@@ -31,18 +31,17 @@ public class TrainStation {
     String trainNumber = trainDeparture.getTrainNumber();
     if (!trainDepartures.containsKey(trainNumber)) {
       trainDepartures.put(trainNumber, trainDeparture);
-    } else {
-
     }
   }
+
   public void removeTrainDeparture(String trainNumber) {
-    if (trainDepartures.containsKey(trainNumber)) {
       trainDepartures.remove(trainNumber);
-    } else {
-
-    }
   }
 
+  /**
+   * Updates current time
+   * @param newTime the new time
+   */
   public void updateCurrentTime(LocalTime newTime) {
 
       currentTime.setCurrentTime(newTime);
@@ -100,7 +99,4 @@ public class TrainStation {
   public Statistics getStationStatistics() {
     return stationStatistics;
   }
-
-
-
 }

@@ -3,7 +3,7 @@ package edu.ntnu.stud.ui.io.input;
 import java.util.Scanner;
 
 public class InputReader {
-  public Scanner scanner;
+  private final Scanner scanner;
 
   public InputReader() {
     this.scanner = new Scanner(System.in);

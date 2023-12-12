@@ -20,6 +20,9 @@ public class UserInteraction {
   TrainStation trainStation = new TrainStation();
   InformationBoard informationBoard = new InformationBoard(trainStation);
 
+  /**
+   * Starts the program and user interface.
+   */
   public void StartUI() {
 
     boolean isRunning = true;
@@ -31,7 +34,7 @@ public class UserInteraction {
 
       if (selectedOption == null) {
         userInterface.displayInvalidOptionMessage();
-        continue;
+        continue;     //jumps to next iteration of while loop
       }
       System.out.println("Selected Option: " + selectedOption); // Debug print
 
@@ -51,6 +54,10 @@ public class UserInteraction {
       }
     }
   }
+
+  /**
+   * Method to search train departures.
+   */
   public void searchTrainDepartures() {
     userInterface.displaySearchMenu();
     String searchChoice = inputHandler.menuChoice();
@@ -69,8 +76,9 @@ public class UserInteraction {
   }
 
 
-
-
+  /**
+   * Method to edit train departures.
+   */
   public void editTrainDeparture() {
     userInterface.trainNumberPrompt();
     String trainNumber = inputHandler.getTrainNumberInput();

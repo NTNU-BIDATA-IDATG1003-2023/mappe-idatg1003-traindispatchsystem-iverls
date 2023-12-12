@@ -38,8 +38,4 @@ public class Validator {
   public static boolean validateTrainNumber(String userInput) {
     return !Objects.equals(userInput, "");
   }
-
-  public static boolean validateDelay(String userInput) {
-    return !Objects.equals(userInput, "");
-  }
 }

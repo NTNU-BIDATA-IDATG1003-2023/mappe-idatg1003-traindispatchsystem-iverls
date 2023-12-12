@@ -11,8 +11,8 @@ import java.time.LocalTime;
 public class InputHandler {
 
   InputReader inputReader = new InputReader();
-  TerminalPrinter terminalPrinter = new TerminalPrinter();
   UserInterface userInterface = new UserInterface();
+  TerminalPrinter terminalPrinter = new TerminalPrinter();
 
   public String menuChoice() {
     return inputReader.readUserInput();
