@@ -39,5 +39,6 @@ public class InformationBoard {
   public List<TrainDeparture> findTrainDeparturesByDestination(String destination) {
     return trainStation.findTrainDeparturesByDestination(destination);
   }
+
 }
 

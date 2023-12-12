@@ -1,6 +1,7 @@
 package edu.ntnu.stud.ui;
 
 import edu.ntnu.stud.InputHandler;
+import edu.ntnu.stud.core.Clock;
 import edu.ntnu.stud.core.TrainDeparture;
 import edu.ntnu.stud.core.TrainStation;
 import edu.ntnu.stud.ui.io.output.UserInterface;
@@ -14,6 +15,7 @@ public class UserInteraction {
   InputHandler inputHandler = new InputHandler();
   TrainStation trainStation = new TrainStation();
   InformationBoard informationBoard = new InformationBoard(trainStation);
+  Clock clock = new Clock();
 
   public void StartUI() {
 
@@ -129,19 +131,16 @@ public class UserInteraction {
     userInterface.displayEditSuccessMessage();
   }
 
-  public void updateClock()
-  {
+  public void updateClock() {
+    try {
+      LocalTime newTime = inputHandler.getClockTimeInput();
+      clock.setCurrentTime(newTime);
+      trainStation.removeExpiredTrainDepartures(clock.getCurrentTime());
+      userInterface.displayClockUpdatedMessage(clock.getCurrentTime());
 
-  }
-
-  public void addDelay()
-  {
-
-  }
-
-  public void assignLine()
-  {
-
+    } catch (Exception e) {
+      userInterface.errorMessageTimeFormat();
+    }
   }
 
   public void createTrainDeparture() {

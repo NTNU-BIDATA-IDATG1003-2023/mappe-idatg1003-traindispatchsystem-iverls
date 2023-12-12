@@ -107,4 +107,22 @@ public class InputHandler {
     return delay;
   }
 
+  public LocalTime getClockTimeInput() {
+    LocalTime newTime = null;
+    boolean validInput = false;
+
+    while (!validInput) {
+      userInterface.clockTimePrompt();
+      String userInputTime = inputReader.readUserInput();
+      if (Validator.validateTime(userInputTime)) {
+        newTime = LocalTime.parse(userInputTime);
+        validInput = true;
+      } else {
+        userInterface.printError("Invalid time format. Please enter a valid time (HH:MM).");
+      }
+    }
+
+    return newTime;
+  }
+
 }

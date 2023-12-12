@@ -1,6 +1,7 @@
 package edu.ntnu.stud.ui.io.output;
 
 import edu.ntnu.stud.core.TrainDeparture;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,6 +68,14 @@ public class UserInterface {
     print("New Train Departure Created:");
   }
 
+  public void clockTimePrompt() {
+    print("Enter the current time: ");
+  }
+
+  public void displayClockUpdatedMessage(LocalTime newTime) {
+    print("Time have successfully been updated. Departed trains have removed from Information board.");
+  }
+
 
   public void displayTrainDepartureDetails(Optional<TrainDeparture> trainDepartureOptional) {
     if (trainDepartureOptional.isPresent()) {
@@ -93,9 +102,6 @@ public class UserInterface {
     }
   }
 
-  public void errorMessageTimeFormat() {
-    printError("Invalid time format, please try again (HH:MM): ");
-  }
   public void exitMessage() {
  print("Thanks for using our app. Take care!");
   }
@@ -121,4 +127,9 @@ public class UserInterface {
   public void displayDepartureRemovalSuccessMessage() {
     print("This Train departure have successfully been deleted");
   }
+
+  public void errorMessageTimeFormat() {
+    printError("Invalid time format, please try again (HH:MM): ");
+  }
+
 }
