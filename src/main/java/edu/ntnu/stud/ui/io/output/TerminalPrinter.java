@@ -1,5 +1,8 @@
 package edu.ntnu.stud.ui.io.output;
 
+/**
+ * Class responsible for printing to the terminal.
+ */
 public class TerminalPrinter {
 
   public void print(String stringToPrint) {

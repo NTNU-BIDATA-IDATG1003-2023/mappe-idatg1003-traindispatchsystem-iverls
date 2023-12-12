@@ -6,6 +6,9 @@ import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class responsible for the statistics of the train departure.
+ */
 public class Statistics {
 
   private final TrainStation trainStation;
@@ -16,7 +19,11 @@ public class Statistics {
   private double averageDelay;
   private double percentageOfNonDelayedDepartures;
 
-  // Constructor
+
+  /**
+   * constructor
+   * @param trainStation train station.
+   */
   public Statistics(TrainStation trainStation) {
     this.trainStation = trainStation;
     this.departuresByDestination = new HashMap<>();

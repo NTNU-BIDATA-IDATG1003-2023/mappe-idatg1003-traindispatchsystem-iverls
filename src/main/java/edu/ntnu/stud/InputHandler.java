@@ -7,7 +7,9 @@ import edu.ntnu.stud.utility.Validator;
 import java.time.LocalTime;
 
 
-
+/**
+ * Class responsible for handling user input.
+ */
 public class InputHandler {
 
   InputReader inputReader = new InputReader();
@@ -126,5 +128,6 @@ public class InputHandler {
 
     return newTime;
   }
+
 
 }

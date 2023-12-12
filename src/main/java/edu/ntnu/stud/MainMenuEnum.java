@@ -1,5 +1,9 @@
 package edu.ntnu.stud;
 
+/**
+ * Enum class that handles allowing the user to choose one of the following options in this enum class for the main
+ * menu specifically.
+ */
 public enum MainMenuEnum {
   VIEW_INFORMATION_BOARD(new String[]{"view", "information", "board"}, "View Information Board"),
   SEARCH_TRAIN_DEPARTURE(new String[]{"search"}, "Search for Train Departure"),
@@ -26,6 +30,12 @@ public enum MainMenuEnum {
     return fullDescription;
   }
 
+  /**
+   * implicit constructor overwritten to better utilize javas enum functionality for parameters for each enum value.
+   * this allows for user-friendly output and input.
+   * @param input string that will be used to find the corresponding enum value.
+   * @return the enum value which the input string corresponds to, returns null for invalid input.
+   */
   public static MainMenuEnum fromInput(String input) {
     if (input == null || input.trim().isEmpty()) {
       return null;

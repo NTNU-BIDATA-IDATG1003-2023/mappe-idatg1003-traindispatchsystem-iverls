@@ -63,15 +63,18 @@ public class UserInteraction {
     String searchChoice = inputHandler.menuChoice();
 
     TrainDepartureEnum command = TrainDepartureEnum.fromCommandWord(searchChoice);
-
-    switch (command) {
-      case SEARCH_DEPARTURE_TIME -> searchByDepartureTime();
-      case SEARCH_LINE -> searchByLine();
-      case SEARCH_TRAIN_NUMBER -> searchByTrainNumber();
-      case SEARCH_DESTINATION -> searchByDestination();
-      case SEARCH_TRACK -> searchByTrack();
-      case SEARCH_DELAY -> searchByDelay();
-      default -> userInterface.displayInvalidOptionMessage();
+    if (command == null){
+      userInterface.displayInvalidOptionMessage();
+    }else {
+      switch (command) {
+        case SEARCH_DEPARTURE_TIME -> searchByDepartureTime();
+        case SEARCH_LINE -> searchByLine();
+        case SEARCH_TRAIN_NUMBER -> searchByTrainNumber();
+        case SEARCH_DESTINATION -> searchByDestination();
+        case SEARCH_TRACK -> searchByTrack();
+        case SEARCH_DELAY -> searchByDelay();
+        default -> userInterface.displayInvalidOptionMessage();
+      }
     }
   }
 
@@ -80,7 +83,7 @@ public class UserInteraction {
    * Method to edit train departures.
    */
   public void editTrainDeparture() {
-    userInterface.trainNumberPrompt();
+    //userInterface.trainNumberPrompt();
     String trainNumber = inputHandler.getTrainNumberInput();
     Optional<TrainDeparture> trainDepartureOptional = trainStation.findTrainDepartureByNumber(trainNumber);
 
@@ -221,12 +224,14 @@ public class UserInteraction {
     waitForEnterKeyPress();
   }
 
+  /**
+   * UpdateClock terminates disgracefully. Is to be improved in the future.
+   */
   public void updateClock() {
-
       LocalTime newTime = inputHandler.getClockTimeInput();
       trainStation.updateCurrentTime(newTime);
-      userInterface.displayClockUpdatedMessage(newTime);
-    waitForEnterKeyPress();
+      userInterface.displayClockUpdatedMessage();
+      waitForEnterKeyPress();
   }
 
   public void createTrainDeparture() {

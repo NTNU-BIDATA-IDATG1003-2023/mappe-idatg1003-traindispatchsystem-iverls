@@ -4,11 +4,13 @@ import edu.ntnu.stud.MainMenuEnum;
 import edu.ntnu.stud.TrainDepartureEnum;
 import edu.ntnu.stud.core.TrainDeparture;
 import edu.ntnu.stud.ui.Statistics;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Class responsible for most of the prompts that help the user utilize the terminal.
+ */
 public class UserInterface {
   TerminalPrinter terminalPrinter = new TerminalPrinter();
 
@@ -60,6 +62,10 @@ public class UserInterface {
     return option.getCommandWord().toUpperCase() + " - " + option.getDescription();
   }
 
+  /**
+   * Displays the train departure details of a possible trainDeparture and checks if the train departure is present.
+   * @param trainDepartureOptional the train departure that is or isn't present.
+   */
   public void displayTrainDepartureDetails(Optional<TrainDeparture> trainDepartureOptional) {
     if (trainDepartureOptional.isPresent()) {
       TrainDeparture trainDeparture = trainDepartureOptional.get();
@@ -130,7 +136,7 @@ public class UserInterface {
     terminalPrinter.print("Enter the current time: ");
   }
 
-  public void displayClockUpdatedMessage(LocalTime newTime) {
+  public void displayClockUpdatedMessage() {
     terminalPrinter.print("Time have successfully been updated. Departed trains have removed from Information board.");
   }
 

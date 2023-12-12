@@ -11,22 +11,28 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- *
+ * Class that represents a train station with several train departures.
  */
 public class TrainStation {
   private final Map<String, TrainDeparture> trainDepartures;
-  private Clock currentTime;
-  private TrainDepartureGenerator trainDepartureGenerator;
+  private final Clock currentTime;
   public final Statistics stationStatistics;
 
+  /**
+   * Constructor for train station.
+   */
   public TrainStation() {
     this.trainDepartures = new HashMap<>();
     this.currentTime = new Clock();
-    this.trainDepartureGenerator = new TrainDepartureGenerator(this);
+    TrainDepartureGenerator trainDepartureGenerator = new TrainDepartureGenerator(this);
     trainDepartureGenerator.generateTrainDepartures(15);
     this.stationStatistics = new Statistics(this);
   }
 
+  /**
+   * Add a train departure.
+   * @param trainDeparture train departure to be added.
+   */
   public void addTrainDeparture(TrainDeparture trainDeparture) {
     String trainNumber = trainDeparture.getTrainNumber();
     if (!trainDepartures.containsKey(trainNumber)) {
@@ -34,6 +40,10 @@ public class TrainStation {
     }
   }
 
+  /**
+   * remove train departure
+   * @param trainNumber train number of the departure that is to be removed.
+   */
   public void removeTrainDeparture(String trainNumber) {
       trainDepartures.remove(trainNumber);
   }
@@ -43,8 +53,7 @@ public class TrainStation {
    * @param newTime the new time
    */
   public void updateCurrentTime(LocalTime newTime) {
-
-      currentTime.setCurrentTime(newTime);
+    currentTime.setCurrentTime(newTime);
 
       trainDepartures.entrySet().removeIf(entry -> {
         TrainDeparture departure = entry.getValue();
@@ -56,11 +65,19 @@ public class TrainStation {
       });
   }
 
+  /**
+   * Get the current time of the station.
+   * @return returns the current time of the station.
+   */
   public LocalTime getCurrentTime() {
     return currentTime.getCurrentTime();
   }
 
 
+  /**
+   * Get all the train departures in this train station.
+   * @return all the train departures.
+   */
   public Collection<TrainDeparture> getAllDepartures() {
     return trainDepartures.values();
   }
@@ -69,26 +86,54 @@ public class TrainStation {
         .filter(departure -> departure.getDepartureTime().equals(departureTime))
         .collect(Collectors.toList());
   }
+
+  /**
+   * Find the train departures by line.
+   * @param line line
+   * @return the train departures as a list.
+   */
   public List<TrainDeparture> findTrainDeparturesByLine(String line) {
     return trainDepartures.values().stream()
         .filter(departure -> departure.getLine().equalsIgnoreCase(line))
         .collect(Collectors.toList());
   }
 
+  /**
+   * Find train departure by train number.
+   * @param trainNumber train number
+   * @return optional containing the train departure if it is present.
+   */
   public Optional<TrainDeparture> findTrainDepartureByNumber(String trainNumber) {
       return Optional.ofNullable(trainDepartures.get(trainNumber));
     }
+
+  /**
+   * Find the train departures by destinatino.
+   * @param destination destination
+   * @return list of train departures.
+   */
   public List<TrainDeparture> findTrainDeparturesByDestination(String destination) {
     return trainDepartures.values().stream()
         .filter(departure -> departure.getDestination().equalsIgnoreCase(destination))
         .collect(Collectors.toList());
   }
 
+  /**
+   * Find train departures by track
+   * @param trackNumber track number
+   * @return list of train departures.
+   */
   public List<TrainDeparture> findTrainDeparturesByTrack(int trackNumber) {
     return trainDepartures.values().stream()
         .filter(departure -> departure.getTrack() == trackNumber)
         .collect(Collectors.toList());
   }
+
+  /**
+   * Find train departures by delay.
+   * @param delay the delay.
+   * @return list of train departures.
+   */
   public List<TrainDeparture> findTrainDeparturesByDelay(LocalTime delay) {
     return trainDepartures.values().stream()
         .filter(departure -> departure.getDelay().equals(delay))
@@ -96,6 +141,10 @@ public class TrainStation {
   }
 
 
+  /**
+   * get the station statistics.
+   * @return the station statistics.
+   */
   public Statistics getStationStatistics() {
     return stationStatistics;
   }
