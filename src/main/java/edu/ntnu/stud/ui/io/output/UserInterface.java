@@ -8,145 +8,142 @@ import java.util.Map;
 import java.util.Optional;
 
 public class UserInterface {
+  TerminalPrinter terminalPrinter = new TerminalPrinter();
 
-  public void print(String stringToPrint) {
-    System.out.println(stringToPrint);
-  }
-
-  public void printError(String stringToPrint) {
-    System.err.println(stringToPrint);
-  }
 
   public void displayMainMenu() {
-    print("Welcome to the Train Dispatch App. Here are your options, that can be selected by writing the corresponding number: ");
-    print("1. View information board ");
-    print("2. Search train departure ");
-    print("3. Edit specified train departure ");
-    print("4. Update time ");
-    print("5. Create new train departure ");
-    print("6. Delete specified train departure ");
-    print("7. Show statistics");
-    print("8. Exit application ");
-    print("Please choose an option by pressing a number: ");
+    terminalPrinter.print("Welcome to the Train Dispatch App. Here are your options, that can be selected by writing the corresponding number: ");
+    terminalPrinter.print("1. View information board ");
+    terminalPrinter.print("2. Search train departure ");
+    terminalPrinter.print("3. Edit specified train departure ");
+    terminalPrinter.print("5. Create new train departure ");
+    terminalPrinter.print("6. Delete specified train departure ");
+    terminalPrinter.print("7. Show statistics");
+    terminalPrinter.print("8. Exit application ");
+    terminalPrinter.print("Please choose an option by pressing a number: ");
 
   }
 
   public void displaySearchMenu() {
-    print("Please select search parameter");
-    print("1. TrainNumber ");
-    print("2. Destination ");
+    terminalPrinter.print("Please select search parameter");
+    terminalPrinter.print("1. TrainNumber ");
+    terminalPrinter.print("2. Destination ");
   }
 
   public void displayEditOptions() {
-    print("Please select what information you want to edit");
-    print("1. Track ");
-    print("2. Delay ");
+    terminalPrinter.print("Please select what information you want to edit");
+    terminalPrinter.print("1. Track ");
+    terminalPrinter.print("2. Delay ");
   }
-
-  public void departureTimePrompt() {
-    print("Enter a departure time in format hh:mm ");
-  }
-
-  public void linePrompt() {
-    print("Enter a Line: ");
-  }
-
-  public void trainNumberPrompt() {
-    print("Enter a train number: ");
-  }
-
-  public void destinationPrompt() {
-    print("Enter a destination: ");
-  }
-
-  public void trackPrompt() {
-    print("Enter a track: ");
-  }
-
-  public void delayPrompt() {
-    print("Enter a delay in format hh:mm ");
-  }
-
-  public void departureCreationMessage() {
-    print("New Train Departure Created:");
-  }
-
-  public void clockTimePrompt() {
-    print("Enter the current time: ");
-  }
-
-  public void displayClockUpdatedMessage(LocalTime newTime) {
-    print("Time have successfully been updated. Departed trains have removed from Information board.");
-  }
-
 
   public void displayTrainDepartureDetails(Optional<TrainDeparture> trainDepartureOptional) {
     if (trainDepartureOptional.isPresent()) {
       TrainDeparture trainDeparture = trainDepartureOptional.get();
-      print("Departure Time: " + trainDeparture.getDepartureTime());
-      print("Line: " + trainDeparture.getLine());
-      print("Train Number: " + trainDeparture.getTrainNumber());
-      print("Destination: " + trainDeparture.getDestination());
-      print("Track: " + trainDeparture.getTrack());
-      print("Delay: " + trainDeparture.getDelay());
+      terminalPrinter.print("Departure Time: " + trainDeparture.getDepartureTime());
+      terminalPrinter.print("Line: " + trainDeparture.getLine());
+      terminalPrinter.print("Train Number: " + trainDeparture.getTrainNumber());
+      terminalPrinter.print("Destination: " + trainDeparture.getDestination());
+      terminalPrinter.print("Track: " + trainDeparture.getTrack());
+      terminalPrinter.print("Delay: " + trainDeparture.getDelay());
     } else {
-      print("No train departure found with the given number.");
+      terminalPrinter.print("No train departure found with the given number.");
     }
   }
 
   public void displayTrainDeparturesList(List<TrainDeparture> departures) {
     if (departures.isEmpty()) {
-      print("No train departures found for the given criteria.");
+      terminalPrinter.print("No train departures found for the given criteria.");
     } else {
-      print("Train Departures:");
+      terminalPrinter.print("Train Departures:");
       for (TrainDeparture departure : departures) {
         displayTrainDepartureDetails(Optional.ofNullable(departure));
       }
     }
   }
 
+  public void displayStatistics(Statistics stats) {
+    terminalPrinter.print("Total Departures: " + stats.getTotalDepartures());
+    printFormattedMap("Departures per destination: ", stats.getDeparturesByDestination());
+    printFormattedMap("Departures per track: ", stats.getDeparturesByTrack());
+    printFormattedMap("Departures per line: ", stats.getDeparturesByLine());
+    terminalPrinter.print("Current average departure delay: " + Math.round(stats.getAverageDelay()) + " minutes");
+    terminalPrinter.print("Percentage of departures not delayed: " + Math.round(stats.getPercentageNotDelayed()) + "%");
+  }
+
+
+  public void departureTimePrompt() {
+    terminalPrinter.print("Enter a departure time in format hh:mm ");
+  }
+
+  public void linePrompt() {
+    terminalPrinter.print("Enter a Line: ");
+  }
+
+  public void trainNumberPrompt() {
+    terminalPrinter.print("Enter a train number: ");
+  }
+
+  public void destinationPrompt() {
+    terminalPrinter.print("Enter a destination: ");
+  }
+
+  public void trackPrompt() {
+    terminalPrinter.print("Enter a track: ");
+  }
+
+  public void delayPrompt() {
+    terminalPrinter.print("Enter a delay in format hh:mm ");
+  }
+
+  public void departureCreationMessage() {
+    terminalPrinter.print("New Train Departure Created:");
+  }
+
+  public void clockTimePrompt() {
+    terminalPrinter.print("Enter the current time: ");
+  }
+
+  public void displayClockUpdatedMessage(LocalTime newTime) {
+    terminalPrinter.print("Time have successfully been updated. Departed trains have removed from Information board.");
+  }
+
+
+
   public void exitMessage() {
- print("Thanks for using our app. Take care!");
+    terminalPrinter.print("Thanks for using our app. Take care!");
   }
 
 
   public void displayInvalidOptionMessage() {
-    print("Sorry, that is not a valid command. Please try again:");
+    terminalPrinter.print("Sorry, that is not a valid command. Please try again:");
   }
 
 
   public void displayDepartureNotFoundMessage() {
-    print("There are no departures connected to the provided Train Number");
+    terminalPrinter.print("There are no departures connected to the provided Train Number");
   }
 
   public void displayEditSuccessMessage() {
-    print("Success! Thank you for providing the updated information");
+    terminalPrinter.print("Success! Thank you for providing the updated information");
   }
 
   public void displayTrainNumberNotAvailable() {
-    print("This Train Number is already in use");
+    terminalPrinter.print("This Train Number is already in use");
   }
 
   public void displayDepartureRemovalSuccessMessage() {
-    print("This Train departure have successfully been deleted");
+    terminalPrinter.print("This Train departure have successfully been deleted");
   }
 
   public void errorMessageTimeFormat() {
-    printError("Invalid time format, please try again (HH:MM): ");
+    terminalPrinter.printError("Invalid time format, please try again (HH:MM): ");
   }
 
-  public void displayStatistics(Statistics stats) {
-    print("Total Departures: " + stats.getTotalDepartures());
-    printFormattedMap("Departures per destination: ", stats.getDeparturesByDestination());
-    printFormattedMap("Departures per track: ", stats.getDeparturesByTrack());
-    printFormattedMap("Departures per line: ", stats.getDeparturesByLine());
-    print("Current average departure delay: " + Math.round(stats.getAverageDelay()) + " minutes");
-    print("Percentage of departures not delayed: " + Math.round(stats.getPercentageNotDelayed()) + "%");
-  }
+
 
   private void printFormattedMap(String message, Map<?, ?> map) {
-    print(message);
-    map.forEach((key, value) -> print("  " + key + ": " + value));
+    terminalPrinter.print(message);
+    map.forEach((key, value) -> terminalPrinter.print("  " + key + ": " + value));
   }
 
 
