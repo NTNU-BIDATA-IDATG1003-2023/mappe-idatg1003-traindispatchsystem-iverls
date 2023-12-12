@@ -1,6 +1,7 @@
 package edu.ntnu.stud;
 
 import edu.ntnu.stud.ui.io.input.InputReader;
+import edu.ntnu.stud.ui.io.output.TerminalPrinter;
 import edu.ntnu.stud.ui.io.output.UserInterface;
 import edu.ntnu.stud.utility.Validator;
 import java.time.LocalTime;
@@ -10,6 +11,7 @@ import java.time.LocalTime;
 public class InputHandler {
 
   InputReader inputReader = new InputReader();
+  TerminalPrinter terminalPrinter = new TerminalPrinter();
   UserInterface userInterface = new UserInterface();
 
   public String menuChoice() {
@@ -17,6 +19,7 @@ public class InputHandler {
   }
 
   public LocalTime getDepartureTimeInput() {
+    userInterface.departureTimePrompt();
     LocalTime departureTime = null;
     boolean validInput = false;
 
@@ -33,6 +36,7 @@ public class InputHandler {
   }
 
   public String getLineInput() {
+    userInterface.linePrompt();
     String line = null;
     boolean validInput = false;
 
@@ -48,6 +52,7 @@ public class InputHandler {
   }
 
   public String getTrainNumberInput() {
+    userInterface.trainNumberPrompt();
     String trainNumber = null;
     boolean validInput = false;
 
@@ -56,7 +61,7 @@ public class InputHandler {
       if (Validator.validateTrainNumber(trainNumber)) {
         validInput = true;
       } else {
-        //userInterface.printError("Invalid train number. Please enter a valid number.");
+        terminalPrinter.printError("Invalid train number. Please enter a valid number.");
       }
     }
 
@@ -69,6 +74,7 @@ public class InputHandler {
   }
 
   public int getTrackInput() {
+    userInterface.trackPrompt();
     int track = 0;
     boolean validInput = false;
 
@@ -78,7 +84,7 @@ public class InputHandler {
         track = Integer.parseInt(userInputTrack);
         validInput = true;
       } else {
-        //userInterface.printError("Invalid track number, must be a positive number. Please enter a valid number.");
+        terminalPrinter.printError("Invalid track number, must be a positive number. Please enter a valid number.");
       }
     }
 
@@ -86,6 +92,7 @@ public class InputHandler {
   }
 
   public LocalTime getDelayInput() {
+    userInterface.delayPrompt();
     LocalTime delay = null;
     boolean validInput = false;
 
@@ -95,7 +102,7 @@ public class InputHandler {
         delay = LocalTime.parse(userInputDelay);
         validInput = true;
       } else {
-        //userInterface.printError("Invalid delay format. Please enter a valid time (HH:MM).");
+        terminalPrinter.printError("Invalid delay format. Please enter a valid time (HH:MM).");
       }
     }
 
@@ -103,6 +110,7 @@ public class InputHandler {
   }
 
   public LocalTime getClockTimeInput() {
+    userInterface.clockTimePrompt();
     LocalTime newTime = null;
     boolean validInput = false;
 
@@ -112,7 +120,7 @@ public class InputHandler {
         newTime = LocalTime.parse(userInputTime);
         validInput = true;
       } else {
-        //userInterface.printError("Invalid time format. Please enter a valid time (HH:MM).");
+        terminalPrinter.printError("Invalid time format. Please enter a valid time (HH:MM).");
       }
     }
 
