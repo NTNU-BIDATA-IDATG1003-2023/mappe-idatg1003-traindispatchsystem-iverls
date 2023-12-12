@@ -7,6 +7,7 @@ import edu.ntnu.stud.core.TrainStation;
 import edu.ntnu.stud.ui.io.output.UserInterface;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class UserInteraction {
@@ -44,8 +45,10 @@ public class UserInteraction {
           break;
         case "6":
           deleteTrainDeparture();
-          break;
         case "7":
+          statistics();
+          break;
+        case "8":
           userInterface.exitMessage();
           isRunning = false;
       }
@@ -170,6 +173,16 @@ public class UserInteraction {
     } else {
       userInterface.displayDepartureNotFoundMessage();
     }
+  }
+  public void statistics() {
+    int totalDepartures = trainStation.getTotalDepartures();
+    Map<String, Integer> departuresByDestination = trainStation.getDeparturesByDestination();
+    Map<Integer, Integer> departuresByTrack = trainStation.getDeparturesByTrack();
+    Map<String, Integer> departuresByLine = trainStation.getDeparturesByLine();
+    double averageDelay = trainStation.getAverageDelay();
+    double percentageNotDelayed = trainStation.getPercentageNotDelayed();
+
+    userInterface.displayStatistics(totalDepartures, departuresByDestination, departuresByTrack, departuresByLine, averageDelay, percentageNotDelayed);
   }
 
 

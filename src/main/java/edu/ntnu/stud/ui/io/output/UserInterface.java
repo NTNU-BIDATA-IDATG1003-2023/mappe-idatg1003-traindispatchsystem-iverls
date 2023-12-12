@@ -3,6 +3,7 @@ package edu.ntnu.stud.ui.io.output;
 import edu.ntnu.stud.core.TrainDeparture;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class UserInterface {
@@ -23,7 +24,8 @@ public class UserInterface {
     print("4. Update time ");
     print("5. Create new train departure ");
     print("6. Delete specified train departure ");
-    print("7. Exit application ");
+    print("7. Show statistics");
+    print("8. Exit application ");
     print("Please choose an option by pressing a number: ");
 
   }
@@ -130,6 +132,16 @@ public class UserInterface {
 
   public void errorMessageTimeFormat() {
     printError("Invalid time format, please try again (HH:MM): ");
+  }
+
+  public void displayStatistics(int totalDepartures, Map<String, Integer> departuresByDestination, Map<Integer, Integer> departuresByTrack, Map<String, Integer> departuresByLine, double averageDelay, double percentageNotDelayed) {
+    print("Total Departures: " + totalDepartures);
+    print("Departures per destination: " + departuresByDestination);
+    print("Departures per track: " + departuresByTrack);
+    print("Departures per line: " + departuresByLine);
+    print("Current average departure delay: " + averageDelay);
+    print("Percentage of departures not delayed: " + percentageNotDelayed);
+
   }
 
 }

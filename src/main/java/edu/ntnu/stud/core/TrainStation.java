@@ -61,4 +61,55 @@ public class TrainStation {
   }
 
 
+  public int getTotalDepartures() {
+    return trainDepartures.size();
+  }
+
+  public Map<String, Integer> getDeparturesByDestination() {
+    Map<String, Integer> countByDestination = new HashMap<>();
+    for (TrainDeparture departure : trainDepartures.values()) {
+      countByDestination.merge(departure.getDestination(), 1, Integer::sum);
+    }
+    return countByDestination;
+  }
+
+
+  public Map<Integer, Integer> getDeparturesByTrack() {
+    Map<Integer, Integer> countByTrack = new HashMap<>();
+    for (TrainDeparture departure : trainDepartures.values()) {
+      countByTrack.merge(departure.getTrack(), 1, Integer::sum);
+    }
+    return countByTrack;
+  }
+
+  public Map<String, Integer> getDeparturesByLine() {
+    Map<String, Integer> countByLine = new HashMap<>();
+    for (TrainDeparture departure : trainDepartures.values()) {
+      countByLine.merge(departure.getLine(), 1, Integer::sum);
+    }
+    return countByLine;
+  }
+
+
+  public double getAverageDelay() {
+    if (trainDepartures.isEmpty()) {
+      return 0;
+    }
+    int totalDelayMinutes = trainDepartures.values().stream()
+        .mapToInt(departure -> departure.getDelay().getHour() * 60 + departure.getDelay().getMinute())
+        .sum();
+    return (double) totalDelayMinutes / trainDepartures.size();
+  }
+
+
+  public double getPercentageNotDelayed() {
+    if (trainDepartures.isEmpty()) {
+      return 100.0;
+    }
+    long notDelayedCount = trainDepartures.values().stream()
+        .filter(departure -> departure.getDelay().equals(LocalTime.of(0, 0)))
+        .count();
+    return (double) notDelayedCount / trainDepartures.size() * 100;
+  }
+
 }
