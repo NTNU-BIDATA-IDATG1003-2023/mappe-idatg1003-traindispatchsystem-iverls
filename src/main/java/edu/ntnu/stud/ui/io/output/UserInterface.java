@@ -96,8 +96,9 @@ public class UserInterface {
 
 
   public void departureTimePrompt() {
-    terminalPrinter.print("Enter a departure time in format hh:mm ");
+    terminalPrinter.print("Please enter the departure time (format HH:MM): ");
   }
+
 
   public void linePrompt() {
     terminalPrinter.print("Enter a Line: ");
@@ -119,9 +120,11 @@ public class UserInterface {
     terminalPrinter.print("Enter a delay in format hh:mm ");
   }
 
-  public void departureCreationMessage() {
-    terminalPrinter.print("New Train Departure Created:");
+  public void departureCreationMessage(TrainDeparture trainDeparture) {
+    terminalPrinter.print("New Train Departure Created Successfully!");
+    displayTrainDepartureDetails(Optional.ofNullable(trainDeparture));
   }
+
 
   public void clockTimePrompt() {
     terminalPrinter.print("Enter the current time: ");
@@ -139,8 +142,10 @@ public class UserInterface {
 
 
   public void displayInvalidOptionMessage() {
-    terminalPrinter.print("Sorry, that is not a valid command. Please try again:");
+    terminalPrinter.print("Sorry, that is not a valid command.");
+    terminalPrinter.print("Please refer to the list of valid commands and try again.");
   }
+
 
 
   public void displayDepartureNotFoundMessage() {

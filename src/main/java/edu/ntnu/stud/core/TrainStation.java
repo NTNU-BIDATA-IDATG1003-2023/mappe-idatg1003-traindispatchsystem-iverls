@@ -10,7 +10,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-
+/**
+ *
+ */
 public class TrainStation {
   public final Map<String, TrainDeparture> trainDepartures;
   private Clock currentTime;

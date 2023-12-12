@@ -4,8 +4,8 @@ public enum MainMenuEnum {
   VIEW_INFORMATION_BOARD(new String[]{"view", "information", "board"}, "View Information Board"),
   SEARCH_TRAIN_DEPARTURE(new String[]{"search"}, "Search for Train Departure"),
   EDIT_TRAIN_DEPARTURE(new String[]{"edit"}, "Edit Train Departure"),
-  UPDATE_TIME(new String[]{"update", "time"}, "Update Time"),
-  CREATE_TRAIN_DEPARTURE(new String[]{"create", "new"}, "Create New Train Departure"),
+  UPDATE_TIME(new String[]{"update"}, "Update Time"),
+  CREATE_TRAIN_DEPARTURE(new String[]{"create"}, "Create New Train Departure"),
   DELETE_TRAIN_DEPARTURE(new String[]{"delete"}, "Delete Train Departure"),
   SHOW_STATISTICS(new String[]{"statistics"}, "Show Statistics"),
   EXIT_APPLICATION(new String[]{"exit"}, "Exit Application");

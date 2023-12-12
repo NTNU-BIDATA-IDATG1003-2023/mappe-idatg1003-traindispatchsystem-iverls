@@ -230,7 +230,7 @@ public class UserInteraction {
     else {
       TrainDeparture trainDeparture = new TrainDeparture(inputHandler.getDepartureTimeInput(),
           inputHandler.getLineInput(), trainNumber, inputHandler.getDestinationInput(), inputHandler.getTrackInput(), inputHandler.getDelayInput());
-      userInterface.departureCreationMessage();
+      userInterface.departureCreationMessage(trainDeparture);
       userInterface.displayTrainDepartureDetails(Optional.of(trainDeparture));
       trainStation.addTrainDeparture(trainDeparture);
     }
