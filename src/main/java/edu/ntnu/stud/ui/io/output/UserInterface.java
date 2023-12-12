@@ -1,5 +1,6 @@
 package edu.ntnu.stud.ui.io.output;
 
+import edu.ntnu.stud.MainMenu;
 import edu.ntnu.stud.core.TrainDeparture;
 import edu.ntnu.stud.ui.Statistics;
 import java.time.LocalTime;
@@ -12,16 +13,10 @@ public class UserInterface {
 
 
   public void displayMainMenu() {
-    terminalPrinter.print("Welcome to the Train Dispatch App. Here are your options, that can be selected by writing the corresponding number: ");
-    terminalPrinter.print("1. View information board ");
-    terminalPrinter.print("2. Search train departure ");
-    terminalPrinter.print("3. Edit specified train departure ");
-    terminalPrinter.print("5. Create new train departure ");
-    terminalPrinter.print("6. Delete specified train departure ");
-    terminalPrinter.print("7. Show statistics");
-    terminalPrinter.print("8. Exit application ");
+    for (MainMenu option : MainMenu.values()) {
+      terminalPrinter.print(option.getOptionNumber() + ". " + option.getDescription());
+    }
     terminalPrinter.print("Please choose an option by pressing a number: ");
-
   }
 
   public void displaySearchMenu() {

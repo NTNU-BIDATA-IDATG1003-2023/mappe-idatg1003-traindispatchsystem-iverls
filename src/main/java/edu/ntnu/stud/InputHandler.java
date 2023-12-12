@@ -21,7 +21,6 @@ public class InputHandler {
     boolean validInput = false;
 
     while (!validInput) {
-      userInterface.departureTimePrompt();
       String userInputDepartureTime = inputReader.readUserInput();
       if (Validator.validateTime(userInputDepartureTime)) {
         departureTime = LocalTime.parse(userInputDepartureTime);
@@ -38,7 +37,6 @@ public class InputHandler {
     boolean validInput = false;
 
     while (!validInput) {
-      userInterface.linePrompt();
       line = inputReader.readUserInput();
       if (Validator.validateString(line)) {
         validInput = true;
@@ -54,12 +52,11 @@ public class InputHandler {
     boolean validInput = false;
 
     while (!validInput) {
-      userInterface.trainNumberPrompt();
       trainNumber = inputReader.readUserInput();
       if (Validator.validateTrainNumber(trainNumber)) {
         validInput = true;
       } else {
-        userInterface.printError("Invalid train number. Please enter a valid number.");
+        //userInterface.printError("Invalid train number. Please enter a valid number.");
       }
     }
 
@@ -76,13 +73,12 @@ public class InputHandler {
     boolean validInput = false;
 
     while (!validInput) {
-      userInterface.trackPrompt();
       String userInputTrack = inputReader.readUserInput();
       if (Validator.validateTrack(userInputTrack)) {
         track = Integer.parseInt(userInputTrack);
         validInput = true;
       } else {
-        userInterface.printError("Invalid track number, must be a positive number. Please enter a valid number.");
+        //userInterface.printError("Invalid track number, must be a positive number. Please enter a valid number.");
       }
     }
 
@@ -94,13 +90,12 @@ public class InputHandler {
     boolean validInput = false;
 
     while (!validInput) {
-      userInterface.delayPrompt();
       String userInputDelay = inputReader.readUserInput();
       if (Validator.validateTime(userInputDelay)) {
         delay = LocalTime.parse(userInputDelay);
         validInput = true;
       } else {
-        userInterface.printError("Invalid delay format. Please enter a valid time (HH:MM).");
+        //userInterface.printError("Invalid delay format. Please enter a valid time (HH:MM).");
       }
     }
 
@@ -112,13 +107,12 @@ public class InputHandler {
     boolean validInput = false;
 
     while (!validInput) {
-      userInterface.clockTimePrompt();
       String userInputTime = inputReader.readUserInput();
       if (Validator.validateTime(userInputTime)) {
         newTime = LocalTime.parse(userInputTime);
         validInput = true;
       } else {
-        userInterface.printError("Invalid time format. Please enter a valid time (HH:MM).");
+        //userInterface.printError("Invalid time format. Please enter a valid time (HH:MM).");
       }
     }
 
